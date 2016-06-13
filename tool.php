@@ -162,7 +162,9 @@ if ($context->valid) {
 
             if ($custom_context_template and $tplcourse) {
 
-                $username = local_ltiprovider_create_username($context->info['oauth_consumer_key'], $context->info['user_id']);
+                //$username = local_ltiprovider_create_username($context->info['oauth_consumer_key'], $context->info['user_id']);
+                // FISDAP MOD: do not generate a username, always use user_id as username
+                $username = $context->info['user_id'];
                 $userrestoringid = $DB->get_field('user', 'id', array('username' => $username));;
 
                 $newcourse = new stdClass();
@@ -243,7 +245,9 @@ if ($context->valid) {
     // We need an username without extended chars
     // Later accounts add the ConsumerKey - we silently upgrade old accounts
     // Might want a flag for this -- Chuck
-    $username = local_ltiprovider_create_username($context->info['oauth_consumer_key'], $context->info['user_id']);
+    //$username = local_ltiprovider_create_username($context->info['oauth_consumer_key'], $context->info['user_id']);
+    // FISDAP MOD: do not generate a username, always use user_id as username
+    $username = $context->info['user_id'];
     $dbuser = $DB->get_record('user', array('username' => $username));
     if ( ! $dbuser ) {
         $old_username = 'ltiprovider'.md5($context->getUserKey());
